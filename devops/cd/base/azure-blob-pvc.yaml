@@ -1,0 +1,12 @@
+# azure-blob-pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: data-bloba-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: custom-azureblobfuse
+  resources:
+    requests:
+      storage: 100Gi  # Adjust the storage size as per your requirements

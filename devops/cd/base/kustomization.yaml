@@ -1,0 +1,10 @@
+# kustomize-app/base/kustomization.yaml
+resources:
+  - videogen-backend.yaml
+  # - azure-blob-storageclass.yaml
+  # - azure-blob-pvc.yaml
+  # - azure-blob-pv.yaml
+
+images:
+  - name: wizstudio.azurecr.io/videogen-backend
+    newTag: latest

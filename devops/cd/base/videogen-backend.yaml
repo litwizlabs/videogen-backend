@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: videogen-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: videogen-backend
+  template:
+    metadata:
+      labels:
+        app: videogen-backend
+    spec:
+      tolerations:
+        - key: "kubernetes.azure.com/scalesetpriority"
+          operator: "Equal"
+          value: "spot"
+          effect: "NoSchedule"
+      containers:
+        - name: videogen-backend
+          image: wizstudio.azurecr.io/videogen-backend:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: JWT_SECRET
+              value: "2553fc861d4b8313724a4169c2f80d204cfd48f6132269a8b8428a7635c74ac3"
+          # volumeMounts:
+          #   - mountPath: /recording
+          #     name: azure-blob-storage
+      # volumes:
+      #   - name: azure-blob-storage
+      #     persistentVolumeClaim:
+      #       claimName: data-bloba-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: videogen-backend
+spec:
+  type: LoadBalancer
+  selector:
+    app: videogen-backend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080

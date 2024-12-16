@@ -1,0 +1,14 @@
+# azure-blob-storageclass.yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: custom-azureblobfuse
+provisioner: blob.csi.azure.com
+parameters:
+  skuName: Standard_LRS  # or Premium_LRS depending on your storage account type
+  containerName: data
+  secretName: azure-blob-secret
+  secretNamespace: default
+  mountOptions: --use-attr-cache=true
+reclaimPolicy: Retain
+volumeBindingMode: Immediate
