@@ -6,10 +6,10 @@ import passport from 'passport';
 import cors from 'cors';
 // import { errorMiddleware } from './middleware/errorMiddleware';
 import apiRoutes from './routes/apiRoutes';
-import { configurePassport } from './config/passport';
-import sequelize from './config/database';
-import { analyticsMiddleware } from './middleware/analyticsMiddleware';
-import { authenticateUser } from './middleware/authMiddleware';
+// import { configurePassport } from './config/passport';
+// import sequelize from './config/database';
+// import { analyticsMiddleware } from './middleware/analyticsMiddleware';
+// import { authenticateUser } from './middleware/authMiddleware';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -27,11 +27,11 @@ app.use(express.json());
 // app.use(authMiddleware)
 
 // Initialize Passport
-app.use(passport.initialize());
-configurePassport();
+// app.use(passport.initialize());
+// configurePassport();
 
 // Analytics middleware
-app.use(analyticsMiddleware);
+// app.use(analyticsMiddleware);
 
 // Routes
 app.use('/api/v1', apiRoutes);
@@ -47,11 +47,11 @@ app.get('/', (req: Request, res: Response) => {
 // app.use(errorMiddleware);
 
 // Sync database and start server
-sequelize.sync().then(() => {
-  app.listen(port, () => {
-    // Log a message when the server is successfully running
-    console.log(`Server is running on http://0.0.0.0:${port}`);
-  });
-}).catch((error: any) => {
-  console.error('Unable to connect to the database:', error);
+// sequelize.sync().then(() => {
+// }).catch((error: any) => {
+//   console.error('Unable to connect to the database:', error);
+// });
+app.listen(port, () => {
+  // Log a message when the server is successfully running
+  console.log(`Server is running on http://0.0.0.0:${port}`);
 });

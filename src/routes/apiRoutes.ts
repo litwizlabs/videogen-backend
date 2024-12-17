@@ -1,5 +1,4 @@
 import express, { Request, Response } from 'express';
-import { generateToken } from '../utils/jwtUtils';
 import { addCreditRequest, addUserKey, getUserCredits } from '../services/hasuraService';
 import { authenticateUser } from '../middleware/authMiddleware';
 
@@ -65,6 +64,14 @@ router.post('/generate-video', authenticateUser, async (req: any, res: any) => {
 
     // Call Hasura to create video record
     const url = 'https://hasura.getraya.app/api/rest/user_video';
+    const aspect_ratio_map: Record<string, string> = {
+      '16:9': '960x544',
+      '9:16': '544x960',
+      '4:3': '832x624',
+      '3:4': '624x832',
+      '1:1': '720x720'
+    };
+    const aspect_ratio_value = aspect_ratio_map[aspect_ratio as keyof typeof aspect_ratio_map];
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -75,7 +82,7 @@ router.post('/generate-video', authenticateUser, async (req: any, res: any) => {
         object: {
           user_id: user_id,
           prompt: prompt,
-          aspect_ratio: aspect_ratio,
+          aspect_ratio: aspect_ratio_value,
           duration: '3',
           resolution: '540',
           video_url: ''
