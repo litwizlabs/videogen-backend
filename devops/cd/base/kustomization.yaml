@@ -7,4 +7,4 @@ resources:
 
 images:
   - name: wizstudio.azurecr.io/videogen-backend
-    newTag: t171224
+    newTag: t1712241
